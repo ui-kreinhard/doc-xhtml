@@ -1,0 +1,29 @@
+#!/bin/bash
+SAXON_JAR="/Users/karl-ludwigreinhard/Downloads/SaxonHE9-4-0-4J/saxon9he.jar"
+echo 'init'
+touch toc.out.xml
+touch figures.out.xml
+
+echo 'merging'
+java -jar $SAXON_JAR $1 merger.xsl > merged.out.xml 
+
+echo 'removing xsd ref'
+java -jar $SAXON_JAR merged.out.xml removeNamespace.xsl  > removed.out.xml
+
+echo 'dumping outline'
+java -jar $SAXON_JAR removed.out.xml htmlTransformer.xsl > temp.out.xml
+wkhtmltopdf --dump-outline toc.xml --footer-html file:///Users/karl-ludwigreinhard/documents/htmlTest/htmlTest/footer.html --header-html file:///Users/karl-ludwigreinhard/documents/htmlTest/htmlTest/header.html temp.out.xml /tmp/test.pdf
+
+echo 'applying xsl on outline'
+java -jar $SAXON_JAR toc.xml ./toc.xsl > toc.out.xml
+java -jar $SAXON_JAR toc.xml listOfFigures.xsl > figures.out.xml
+java -jar $SAXON_JAR toc.xml listOfSourceCode.xsl > sourceCode.out.xml
+
+echo 'applying master xsl'
+java -jar $SAXON_JAR removed.out.xml ./htmlTransformer.xsl > final.out.xml
+
+echo 'building document'
+wkhtmltopdf --footer-html file:///Users/karl-ludwigreinhard/documents/htmlTest/htmlTest/footer.html --header-html file:///Users/karl-ludwigreinhard/documents/htmlTest/htmlTest/header.html final.out.xml /tmp/test.pdf
+ 
+echo 'cleanup'
+rm *.out.xml

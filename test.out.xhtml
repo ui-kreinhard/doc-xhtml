@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" type="text/css" href="test.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Insert title here</title>
+		<script>
+			function subst() {
+			var vars={};
+			var x=document.location.search.substring(1).split('&amp;');
+			for (var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+			var
+			x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+			for (var i in x) {
+			var y = document.getElementsByClassName(x[i]);
+			for (var j=0; j&lt;y.length; ++j) y[j].textContent = vars[x[i]];
+			}
+			}
+  
+				</script>
+	</head>
+	<body style="border:0; margin: 0;" onload="subst()">
+		<p>
+			<h1>
+				This is my first chaper
+
+				Lets write some text
+
+				<p>
+					<h2>asdf</h2>
+				</p>
+			</h1>
+		</p>
+	</body>
+</html>

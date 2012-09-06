@@ -1,0 +1,132 @@
+@CHARSET "UTF-8";
+
+* {
+	background-color: #FFFFFF;
+	font-family: times new roman;
+}
+
+ol.toc li {
+	list-style-type: none;
+	clear: left;
+	border-bottom: dashed 1px #000;
+	height: 1.05em;
+	margin-top: 00px;
+	position: relative;
+}
+
+ol {
+	list-style-type: none;
+}
+
+ol.toc a,ol.toc span {
+	color: black;
+	background: #fff;
+	padding: 0 3px 0 0;
+	float: left;
+	position: absolute;
+	text-decoration: none;
+}
+
+ol.toc a {
+	color: black;
+	font-color: black;
+	padding: 0 0 0 3px;
+	right: 0;
+}
+
+ol.toc ol {
+	list-style-type: none;
+	margin: 0.2em 0 0em 39px;
+	padding: 0;
+	background: #fff;
+	float: left;
+	display: block;
+	width: 94%;
+}
+
+.chapter {
+	font-family: arial;
+	margin-top: 150px;
+	font-weight: normal;
+	text-align: right;
+	font-size: 150%
+}
+
+.chapter_heading {
+	margin-bottom: 50px;
+	font-size: 120%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	text-align: right;
+	font-family: arial;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	width: 100%
+}
+
+.sourceCode {
+	border-top: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	margin-top: 0px;
+}
+
+.sourceCodeLine {
+	padding: 0;
+	margin: 0
+}
+
+.sourceCodeNaming {
+	padding-top: 0px;
+	margin-top: 0px;
+	text-align: center;
+}
+
+h6 {
+	display: inline;
+	background-color: #FFFFFF;
+	font-family: times new roman;
+	font-size: 100%;
+	/* display: none; */
+	font-weight: normal
+}
+
+.figureDiv {
+	margin: 0px;
+	text-align: center;
+}
+
+.figure {
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+}
+
+.figureNaming {
+	padding-top: 0px;
+	margin-top: 0px;
+	text-align: center;
+}
+
+ul.figures li {
+	clear: left;
+	border-bottom: dashed 1px #000;
+	height: 1.05em;
+	margin-top: 00px;
+	position: relative;
+}
+
+.chapter_paragraph {
+	margin-top: 50px;
+	page-break-after: always;
+}
+
+.source_link {
+	text-decoration: none;
+	font-weight: normal;
+	background-color: #FFFFFF;
+	color: black;
+}
