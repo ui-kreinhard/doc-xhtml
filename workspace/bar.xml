@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://document.schema"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+xsi:schemaLocation="http://document.schema document.xsd">
+	<listOfSourceCode />
+	<tableOfContent />
+	<listOfFigures />
+	<chapter title="included chapter">
+	   <section title="included section">
+	       <subsection title="included subsection">
+	       <content>asdfasdfasdfasdfasdfasdfasdf</content>
+	       </subsection>
+	   </section>
+	</chapter>
+</document>

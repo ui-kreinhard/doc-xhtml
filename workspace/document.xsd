@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="document">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="listOfSourceCode"/>
+        <xs:element ref="tableOfContent"/>
+        <xs:element ref="listOfFigures"/>
+        <xs:element maxOccurs="unbounded" ref="include"/>
+        <xs:element maxOccurs="unbounded" ref="chapter"/>
+        <xs:element ref="bibliography"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="listOfSourceCode">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="tableOfContent">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="listOfFigures">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="chapter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="content"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="include"/>
+        <xs:element maxOccurs="unbounded" ref="section"/>
+      </xs:sequence>
+      <xs:attribute name="title" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="section">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="include"/>
+        <xs:element ref="content"/>
+        <xs:element ref="subsection"/>
+      </xs:sequence>
+      <xs:attribute name="title" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="subsection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="content"/>
+        <xs:element ref="subsubsection"/>
+      </xs:sequence>
+      <xs:attribute name="title" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="subsubsection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="content"/>
+      </xs:sequence>
+      <xs:attribute name="title" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bibliography">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="source"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:attribute name="src" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="content">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="source"/>
+        <xs:element ref="figure"/>
+        <xs:element ref="sourceCode"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="figure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="source"/>
+        <xs:element ref="title"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sourceCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="content"/>
+        <xs:element ref="title"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="source">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="title"/>
+        <xs:element ref="author"/>
+        <xs:element ref="sourceId"/>
+        <xs:element ref="url"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="author" type="xs:NCName"/>
+  <xs:element name="sourceId" type="xs:integer"/>
+  <xs:element name="url" type="xs:NCName"/>
+  <xs:element name="title" type="xs:string"/>
+</xs:schema>
