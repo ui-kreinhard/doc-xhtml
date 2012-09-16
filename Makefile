@@ -25,3 +25,6 @@ clean:
 	mkdir $(TEMP)
 init:
 	cp -Rf $(target)/* $(TEMP)
+
+create_includes:
+	java -jar $(SAXON_JAR) xsl/devScripts/empty.xml xsl/devScripts/createIncludes.xsl > xsl/includeManifest.xsl

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:x="http://www.w3.org/1999/xhtml">
-  <xsl:param name="tempDir"/>
-	
+	xmlns:h="http://www.w3.org/1999/xhtml" xmlns:x="http://www.w3.org/1999/xhtml">
+	<xsl:param name="tempDir" />
+   <xsl:include href="includeManifest.xsl" />
 	<xsl:output indent="yes" method="xhtml" />
 
 	<xsl:template match="/">
@@ -40,7 +40,8 @@
 			<h1 class="chapter_heading">Source Code Listings</h1>
 
 			<ol class="toc">
-				<xsl:copy-of select="document(concat($tempDir,'/sourceCode.out.xml'))/x:html/x:body" />
+				<xsl:copy-of
+					select="document(concat($tempDir,'/sourceCode.out.xml'))/x:html/x:body" />
 			</ol>
 		</p>
 	</xsl:template>
@@ -53,7 +54,8 @@
 			<h1 class="chapter_heading">Table of content</h1>
 
 			<ol class="toc">
-				<xsl:copy-of select="document(concat($tempDir,'/toc.out.xml'))/x:html/x:body" />
+				<xsl:copy-of
+					select="document(concat($tempDir,'/toc.out.xml'))/x:html/x:body" />
 			</ol>
 		</p>
 	</xsl:template>
@@ -66,7 +68,8 @@
 			<h1 class="chapter_heading">List of Figures</h1>
 
 			<ol class="toc">
-				<xsl:copy-of select="document(concat($tempDir,'/figures.out.xml'))/x:html/x:body" />
+				<xsl:copy-of
+					select="document(concat($tempDir,'/figures.out.xml'))/x:html/x:body" />
 			</ol>
 		</p>
 	</xsl:template>
@@ -88,10 +91,15 @@
 					</xsl:attribute>
 						<xsl:value-of select="concat('[',./sourceId/text(),'] ')" />
 					</a>
+					<xsl:if test="./url">
+					<xsl:value-of select="./url/text()" />
+						<xsl:value-of select="'; '" />
+					</xsl:if>
 					<xsl:for-each select="author">
 						<xsl:value-of select="text()" />
+						<xsl:value-of select="'; '" />
 					</xsl:for-each>
-					<xsl:value-of select="'; '" />
+						
 					<i>
 						<xsl:value-of select="./title" />
 					</i>
@@ -99,138 +107,9 @@
 			</xsl:for-each>
 		</p>
 	</xsl:template>
-	
 
 
-	<xsl:template match="content//*">
-		<xsl:copy>
-			<xsl:copy-of select="@*" />
-			<xsl:apply-templates />
-		</xsl:copy>
-	</xsl:template>
-	<xsl:template match="content//source">
-		<a class="source_link">
-			<xsl:attribute name="href">
-				<xsl:value-of select="concat('#source_',@id)" />		
-			</xsl:attribute>
-			<xsl:value-of select="concat('[',@id,']')" />
-		</a>
-	</xsl:template>
 
-	<xsl:template match="content//sourceCode">
-		<xsl:variable name="identificator">
-			<xsl:number format="1.1.1.1"
-				count="chapter | section | subsection | sourceCode" level="multiple" />
-		</xsl:variable>
-		<p>
-				<table class="sourceCode" align="center">
-					<xsl:for-each select="tokenize(content, '\n')">
-						<xsl:if test=". !=''">
-							<tr>
-								<td>
-									<xsl:value-of select="position()" />
-								</td>
-								<td>
-									<pre class="sourceCodeLine">
-										<xsl:value-of select="." />
-									</pre>
-								</td>
-							</tr>
-						</xsl:if>
-					</xsl:for-each>
-				</table>
 
-			<p class="sourceCodeNaming">
-				<h6 style="font-size: 0px">
-					__sourceCode_
-					<xsl:value-of select="$identificator" />
-					___
-					<xsl:value-of select="title" />
-				</h6>
-				Source Code
-				<xsl:value-of select="$identificator" />
-				:
-				<xsl:value-of select="title" />
-			</p>
-		</p>
-	</xsl:template>
 
-	<xsl:template match="content//figure">
-		<xsl:variable name="src" select="./source/text()" />
-		<xsl:variable name="identificator">
-			<xsl:number format="1.1.1.1"
-				count="chapter | section | subsection | figure" level="multiple" />
-		</xsl:variable>
-
-		<p>
-			<div class="figureDiv">
-				<img class="figure">
-					<xsl:attribute name="src">
-				<xsl:value-of select="$src" />
-				</xsl:attribute>
-				</img>
-			</div>
-			<p class="figureNaming">
-				<h6 style="font-size: 0px">
-					__figures_
-					<xsl:value-of select="$identificator" />
-					___
-					<xsl:value-of select="title" />
-				</h6>
-				Figure
-				<xsl:value-of select="$identificator" />
-				:
-				<xsl:value-of select="title" />
-			</p>
-		</p>
-	</xsl:template>
-	<xsl:template match="chapter">
-		<xsl:variable name="chapterNumber">
-			<xsl:number format="1" count="chapter" level="multiple" />
-		</xsl:variable>
-		<p class="chapter">
-			Kapitel
-			<xsl:value-of select="$chapterNumber" />
-		</p>
-		<p class="chapter_paragraph">
-			<h1 class="chapter_heading">
-				<div style="font-size: 0px">
-					<xsl:value-of select="$chapterNumber" />
-					.
-				</div>
-				<xsl:value-of select="@title" />
-			</h1>
-			<xsl:apply-templates />
-		</p>
-	</xsl:template>
-	<xsl:template match="section">
-		<p>
-			<h2>
-				<xsl:number format="1.1 " count="chapter | section"
-					level="multiple" />
-				<xsl:value-of select="@title" />
-			</h2>
-			<xsl:apply-templates />
-		</p>
-	</xsl:template>
-	<xsl:template match="subsection">
-		<p>
-			<h3>
-				<xsl:number format="1.1.1 " count="chapter | section | subsection"
-					level="multiple" />
-				<xsl:value-of select="@title" />
-			</h3>
-			<xsl:apply-templates />
-		</p>
-	</xsl:template>
-	<xsl:template match="subsubsection">
-		<p>
-			<h4>
-				<xsl:number format="1.1.1 "
-					count="chapter | section | subsection | subsection" level="multiple" />
-				<xsl:value-of select="@title" />
-			</h4>
-			<xsl:apply-templates />
-		</p>
-	</xsl:template>
 </xsl:stylesheet>
